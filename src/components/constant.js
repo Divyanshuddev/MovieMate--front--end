@@ -1,0 +1,1 @@
+export const tabs= ['Movies','Tv Shows','just watched']

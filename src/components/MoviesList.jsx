@@ -4,9 +4,14 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import MoviesCard from './MoviesCard';
+import {tabs} from './constant.js'
+
 const style={
     root:{
-        height:"150vh",
+      scrollBehavior: 'smooth',
+      '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar
+      msOverflowStyle: 'none',  // Hide scrollbar IE and Edge
+      scrollbarWidth: 'none',  // Hide scrollbar Firefox
         backgroundColor:"black",
     },
     tabs: {
@@ -58,27 +63,28 @@ export default function MoviesList() {
 
   return (
     <Box sx={style.root}>
-         <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider',padding:"1rem" }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" sx={style.tabs} centered>
-          <Tab label="Movies" {...a11yProps(0)} sx={{color:'white'}} />
-          <Tab label="TV Shows" {...a11yProps(1)} sx={{color:'white'}} />
-          <Tab label="Watch Later" {...a11yProps(2)} sx={{color:'white'}} />
-          <Tab label="Watched" {...a11yProps(3)} sx={{color:'white'}} />
+         <Box sx={{ width: '100%' , height:'auto'}}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider',padding:"1rem" , scrollBehavior: 'smooth',
+          '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar
+          msOverflowStyle: 'none',  // Hide scrollbar IE and Edge
+          scrollbarWidth: 'none',  // Hide scrollbar Firefox
+          }}>
+        <Tabs value={value} onChange={handleChange}  aria-label="basic tabs example" sx={style.tabs} centered>
+         { 
+            tabs.map((value, index) => {
+              return <Tab label={value} {...a11yProps(index)} sx={{color:'white'}} />
+
+          })}
+
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <MoviesCard />
+        <MoviesCard type={tabs[value]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <MoviesCard type={tabs[value]} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel>
+      
     </Box>
     </Box>
   )
